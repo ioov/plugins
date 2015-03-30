@@ -1,0 +1,27 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>html5uploader</title>
+<link rel="stylesheet" type="text/css" href="./css/jquery.html5uploader.css"/>
+</head>
+
+<body>
+<div id="upload"></div>
+<script type="text/javascript" src="../jquery-2.1.3.js"></script>
+<script type="text/javascript" src="./js/jquery.html5uploader.js"></script>
+<script type="text/javascript">
+$(function(){
+	var up = $('#upload').html5uploader({
+		auto:true,
+		//fileTypeExts:'*.png;*.jpg;*.doc;*.docx;*.ppt;*.pptx',
+		multi:true,
+		formData:{key:123456,key2:'vvvv'},
+		fileSizeLimit:99999999999,
+		removeTimeout:9999999,
+		uploader:'upload.php'
+	});
+});
+</script>
+</body>
+</html>
