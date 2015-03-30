@@ -23,7 +23,11 @@
 <script src="./js/jquery.pagination.js"></script>
 <script>
 	$(function(){
-		$('.pagination').pagination();
+		$('.pagination').pagination({
+			after: function(page){
+				console.log(page);
+			}
+		});
 	});
 </script>
 </body>

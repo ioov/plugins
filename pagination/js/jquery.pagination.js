@@ -46,7 +46,7 @@
 			}else{
 				$(elem).append('<span class="prev">上一页</span>');
 				for (var i = 1; i <= total; i++) {
-					if(i == 2){
+					if(i == 3){
 						$(elem).append('<span data-page="'+i+'">'+i+'</span>');
 						$(elem).append('<span>...</span>');
 					}else{
@@ -80,11 +80,23 @@
 		},
 		pageto: function(page_num){
 			this.update_state(page_num);
+			this.opt.after(page_num);
 		},
 		update_state: function(page_num){
 			this.elem.find('span').removeClass('active');
 			this.elem.find('[data-page="'+page_num+'"]').addClass('active');
 			this.set_current_page(page_num);
+
+			if(page_num != 1){
+				this.elem.find('.prev').removeClass('disabled');
+			}else{
+				this.elem.find('.prev').addClass('disabled');
+			}
+			if( page_num == this.get_total_page() ){
+				this.elem.find('.next').addClass('disabled');
+			}else{
+				this.elem.find('.next').removeClass('disabled');
+			}
 		},
 		get_current_page: function(){
 			var current_page = this.opt.current_page;
@@ -98,6 +110,9 @@
 			if(current_page == 1){
 				return false;
 			}
+			if(!$('[data-page="'+(current_page-1)+'"]').length){
+				this.render_html(-1);
+			}
 			this.pageto(current_page-1);
 		},
 		next: function(){
@@ -107,14 +122,14 @@
 				return false;
 			}
 			if(!$('[data-page="'+(current_page+1)+'"]').length){
-				this.render_html();
+				this.render_html(+1);
 			}
 			this.pageto(current_page+1);
 		},
-		render_html: function(){
+		render_html: function(num){
 			this.elem.find('[data-page]').each(function(key, elem){
-				var page = $(elem).data('page');
-				page++;
+				var page = $(elem).attr('data-page');
+				page = parseInt(page) + num;
 				$(elem).attr('data-page', page).html(page);
 			});
 		}
