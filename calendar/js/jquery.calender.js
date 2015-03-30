@@ -7,7 +7,7 @@
 
 (function($){
 	$.fn.calender = function(opt){
-		var opt = $.extend({}, $.fn.calender.defaults, opt);
+		opt = $.extend({}, $.fn.calender.defaults, opt);
 		var _this = $(this);
 
 		return this.each(function(index, el) {
