@@ -122,10 +122,16 @@
 				_this.renderTmpl();
 			});
 			this.el.on('click', '.calender-next-month', function(){
+				if(_this.month >= 24){
+					return false;
+				}
 				_this.month += 1;
 				_this.renderTmpl();
 			});
 			this.el.on('click', '.calender-prev-month', function(){
+				if(_this.month <= 1){
+					return false;
+				}
 				_this.month -= 1;
 				_this.renderTmpl();
 			});
