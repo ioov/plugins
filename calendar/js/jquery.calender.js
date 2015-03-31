@@ -118,11 +118,14 @@
 				_this.renderTmpl();
 			});
 			this.el.on('click', '.calender-prev-year', function(){
+				if(_this.year <= 1900){
+					return false;
+				}
 				_this.year -= 1;
 				_this.renderTmpl();
 			});
 			this.el.on('click', '.calender-next-month', function(){
-				if(_this.month >= 24){
+				if(_this.month >= 12){
 					return false;
 				}
 				_this.month += 1;
