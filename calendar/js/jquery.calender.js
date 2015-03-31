@@ -35,10 +35,8 @@
 
 	Calender.prototype = {
 		init: function(){
-			var _date = this.date;
-			var datePerMonth = this.getDatePerMonth(_date);
-			var firstDayPerMonth = this.getFirstDayPerMonth(_date);
-			this.renderTmpl(firstDayPerMonth, datePerMonth);
+			this.renderTmpl();
+			this.eventHandler();
 		},
 		getDatePerMonth: function(date){
 			var _date = new Date(date.year, date.month, 0);
@@ -48,13 +46,19 @@
 			var _date = new Date(date.year, date.month-1, 1);
 			return _date.getDay() == 0 ? 7 : _date.getDay();
 		},
-		renderTmpl: function(firstDayPerMonth, datePerMonth){
+		renderTmpl: function(){
+			var datePerMonth = this.getDatePerMonth(this.date);
+			var firstDayPerMonth = this.getFirstDayPerMonth(this.date);
+
 			var tmpl = '<div class="calender-btns">';
-			tmpl += '<a class="pre-year" href="javascript:;">上一年</a>';
-			tmpl += '<a class="next-year" href="javascript:;">下一年</a>';
-			tmpl += '<a class="pre-month" href="javascript:;">上一月</a>';
-			tmpl += '<a class="next-month" href="javascript:;">下一月</a>';
+			tmpl += '<a class="calender-prev-year" href="javascript:;">上一年</a>';
+			tmpl += '<span class="calender-year">'+this.date.year+'</span>';
+			tmpl += '<a class="calender-next-year" href="javascript:;">下一年</a>';
+			tmpl += '<a class="calender-prev-month" href="javascript:;">上一月</a>';
+			tmpl += '<span class="calender-month">'+this.date.month+'</span>';
+			tmpl += '<a class="calender-next-month" href="javascript:;">下一月</a>';
 			tmpl += '</div>';
+
 			tmpl += '<div class="calender-items">';
 			tmpl += '<ul>';
 			for (var i = 0, len = this.opt.week.length; i < len; i++) {
@@ -76,7 +80,26 @@
 			tmpl += '</ol>';
 			tmpl += '</div>';
 
-			this.el.append(tmpl);
+			this.el.html(tmpl);
+		},
+		eventHandler: function(){
+			var _this = this;
+			this.el.on('click', '.calender-next-year', function(){
+				_this.date.year += 1;
+				_this.renderTmpl();
+			});
+			this.el.on('click', '.calender-prev-year', function(){
+				_this.date.year -= 1;
+				_this.renderTmpl();
+			});
+			this.el.on('click', '.calender-next-month', function(){
+				_this.date.month += 1;
+				_this.renderTmpl();
+			});
+			this.el.on('click', '.calender-prev-month', function(){
+				_this.date.month -= 1;
+				_this.renderTmpl();
+			});
 		}
 	}
 })(jQuery);
