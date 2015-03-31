@@ -81,7 +81,7 @@
 
             for (var i = prevMonthDays - (firstDay - 1) + 1; i <= prevMonthDays; i++) {
         		if ( this.isCurDate(this.year, this.month-1, i) ){
-	    			className = 'today';
+	    			className = 'calender-today';
 	    		}else{
 	    			className = '';
 	    		}
@@ -90,7 +90,7 @@
 
 	        for (var i = 1; i <= datePerMonth; i++) {
 	        	if ( this.isCurDate(this.year, this.month, i) ){
-	    			className = 'today';
+	    			className = 'calender-today';
 	    		}else{
 	    			className = '';
 	    		}
@@ -99,7 +99,7 @@
 
 	        for (var i = 1; i <= 42 - ( datePerMonth + ( firstDay - 1 ) ); i++) {
 	        	if ( this.isCurDate(this.year, this.month+1, i) ){
-	    			className = 'today';
+	    			className = 'calender-today';
 	    		}else{
 	    			className = '';
 	    		}
@@ -125,17 +125,21 @@
 				_this.renderTmpl();
 			});
 			this.el.on('click', '.calender-next-month', function(){
-				if(_this.month >= 12){
-					return false;
+				if(_this.month == 12){
+					_this.year += 1;
+					_this.month -= 11;
+				}else{
+					_this.month += 1;
 				}
-				_this.month += 1;
 				_this.renderTmpl();
 			});
 			this.el.on('click', '.calender-prev-month', function(){
-				if(_this.month <= 1){
-					return false;
+				if(_this.month == 1){
+					_this.year -= 1;
+					_this.month += 11;
+				}else{
+					_this.month -= 1;
 				}
-				_this.month -= 1;
 				_this.renderTmpl();
 			});
 		}
