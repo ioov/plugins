@@ -57,12 +57,13 @@
 			return curDate.year == year && curDate.month == month && curDate.date == date && true;
 		},
 		renderTmpl: function(){
-			var datePerMonth = this.getDays(this.year, this.month);
-			var firstDay = this.getFirstDay(this.year, this.month);
-			var prevMonthDays = this.getDays(this.year, this.month-1);
-			var className = '';
-
-			var tmpl = '<div class="calender-btns">';
+			var tmpl = '';
+			tmpl += this.renderPannelTmpl();
+			tmpl += this.renderItemsTmpl();
+			this.el.html(tmpl);
+		},
+		renderPannelTmpl: function(){
+			var tmpl = '<div class="calender-pannel">';
 			tmpl += '<a class="calender-prev-year" href="javascript:;">上一年</a>';
 			tmpl += '<span class="calender-year">'+this.year+'</span>';
 			tmpl += '<a class="calender-next-year" href="javascript:;">下一年</a>';
@@ -70,16 +71,30 @@
 			tmpl += '<span class="calender-month">'+this.month+'</span>';
 			tmpl += '<a class="calender-next-month" href="javascript:;">下一月</a>';
 			tmpl += '</div>';
-
-			tmpl += '<div class="calender-items">';
-			tmpl += '<ul>';
-			for (var i = 0, len = this.opt.week.length; i < len; i++) {
-				tmpl += '<li>'+this.opt.week[i]+'</li>';
-			}
-            tmpl += '</ul>';
+			return tmpl;
+		},
+		renderItemsTmpl: function(){
+			var tmpl = '<div class="calender-items">';
+			tmpl += this.renderWeekTmpl();
             tmpl += '<ol>';
 
-            for (var i = prevMonthDays - (firstDay - 1) + 1; i <= prevMonthDays; i++) {
+            tmpl += this.renderPrevTmpl();
+            tmpl += this.renderCurTmpl();
+            tmpl += this.renderNextTmpl();
+
+			tmpl += '</ol>';
+			tmpl += '</div>';
+
+			return tmpl;
+		},
+		renderPrevTmpl: function(){
+			var tmpl = '';
+			var className = '';
+			var days = this.getDays(this.year, this.month);
+			var prevDays = this.getDays(this.year, this.month-1);
+			var firstDay = this.getFirstDay(this.year, this.month);
+
+			for (var i = prevDays - (firstDay - 1) + 1; i <= prevDays; i++) {
         		if ( this.isCurDate(this.year, this.month-1, i) ){
 	    			className = 'calender-today';
 	    		}else{
@@ -87,8 +102,14 @@
 	    		}
             	tmpl += '<li class="calender-cross '+className+'">'+i+'</li>';
             }
+            return tmpl;
+		},
+		renderCurTmpl: function(){
+			var tmpl = '';
+			var className = '';
+			var days = this.getDays(this.year, this.month);
 
-	        for (var i = 1; i <= datePerMonth; i++) {
+			for (var i = 1; i <= days; i++) {
 	        	if ( this.isCurDate(this.year, this.month, i) ){
 	    			className = 'calender-today';
 	    		}else{
@@ -96,8 +117,15 @@
 	    		}
             	tmpl += '<li class="'+className+'">'+i+'</li>';
             }
-
-	        for (var i = 1; i <= 42 - ( datePerMonth + ( firstDay - 1 ) ); i++) {
+            return tmpl;
+		},
+		renderNextTmpl: function(){
+			var tmpl = '';
+			var className = '';
+			var days = this.getDays(this.year, this.month);
+			var firstDay = this.getFirstDay(this.year, this.month);
+			
+			for (var i = 1; i <= 42 - ( days + ( firstDay - 1 ) ); i++) {
 	        	if ( this.isCurDate(this.year, this.month+1, i) ){
 	    			className = 'calender-today';
 	    		}else{
@@ -105,11 +133,15 @@
 	    		}
             	tmpl += '<li class="calender-cross '+className+'">'+i+'</li>';
             }
-       
-			tmpl += '</ol>';
-			tmpl += '</div>';
-
-			this.el.html(tmpl);
+            return tmpl;
+		},
+		renderWeekTmpl: function(){
+			var tmpl = '<ul>';
+			for (var i = 0, len = this.opt.week.length; i < len; i++) {
+				tmpl += '<li>'+this.opt.week[i]+'</li>';
+			}
+            tmpl += '</ul>';
+			return tmpl;
 		},
 		eventHandler: function(){
 			var _this = this;
