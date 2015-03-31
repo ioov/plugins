@@ -36,11 +36,11 @@
 			this.renderTmpl();
 			this.eventHandler();
 		},
-		getDatePerMonth: function(year, month){
+		getDays: function(year, month){
 			var _date = new Date(year, month, 0);
 			return _date.getDate();
 		},
-		getFirstDayPerMonth: function(year, month){
+		getFirstDay: function(year, month){
 			var _date = new Date(year, month-1, 1);
 			return _date.getDay() == 0 ? 7 : _date.getDay();
 		},
@@ -57,9 +57,9 @@
 			return curDate.year == year && curDate.month == month && curDate.date == date && true;
 		},
 		renderTmpl: function(){
-			var datePerMonth = this.getDatePerMonth(this.year, this.month);
-			var firstDayPerMonth = this.getFirstDayPerMonth(this.year, this.month);
-			var prevDatePerMonth = this.getDatePerMonth(this.year, this.month-1);
+			var datePerMonth = this.getDays(this.year, this.month);
+			var firstDay = this.getFirstDay(this.year, this.month);
+			var prevMonthDays = this.getDays(this.year, this.month-1);
 			var className = '';
 
 			var tmpl = '<div class="calender-btns">';
@@ -79,8 +79,7 @@
             tmpl += '</ul>';
             tmpl += '<ol>';
 
-
-            for (var i = prevDatePerMonth - (firstDayPerMonth - 1) + 1; i <= prevDatePerMonth; i++) {
+            for (var i = prevMonthDays - (firstDay - 1) + 1; i <= prevMonthDays; i++) {
         		if ( this.isCurDate(this.year, this.month-1, i) ){
 	    			className = 'today';
 	    		}else{
@@ -98,7 +97,7 @@
             	tmpl += '<li class="'+className+'">'+i+'</li>';
             }
 
-	        for (var i = 1; i <= 42 - ( datePerMonth + ( firstDayPerMonth - 1 ) ); i++) {
+	        for (var i = 1; i <= 42 - ( datePerMonth + ( firstDay - 1 ) ); i++) {
 	        	if ( this.isCurDate(this.year, this.month+1, i) ){
 	    			className = 'today';
 	    		}else{
