@@ -1,0 +1,29 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2015-03-31 11:44:23
+ * @version $Id$
+ */
+ .calender-items{
+ 	width: 287px;
+ 	border: 1px solid #fad;
+	border-bottom: none;
+	border-right: none;
+ }
+.calender-items ul,
+.calender-items ol{
+	overflow: hidden;
+}
+.calender-items li{
+	float: left;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid #fad;
+	text-align: center;
+	margin: -1px 0 0 -1px;
+}
+.calender-items .today{
+	background: #adf;
+}
