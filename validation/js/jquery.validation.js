@@ -13,15 +13,15 @@
 			new Validation(_this, opt);
 		});
 	};
-	$.fn.validation.defaults = {};
+	$.fn.validation.defaults = {
+		status: {}
+	};
 
 	function Validation(_this, opt){
 		this.elem = _this;
 		this.opt = opt;
 		this.init();
 	}
-
-	var status = {};
 
 	Validation.prototype = {
 		init: function(){
@@ -35,12 +35,11 @@
 			var config = this.opt.config;
 			var data = this.opt.data;
 			for(var i in config){
-				status[i] = this[config[i]]( data[i] && data[i] );
+				this.opt.status[i] = this[config[i]]( data[i] && data[i] );
 			}
-
 		},
 		getStatus: function(){
-			return status;
+			return this.opt.status;
 		},
 		isNotEmpty: function(data){
 			if(data){
@@ -50,7 +49,7 @@
 		},
 		isNumber: function(data){
 			var re = /[^\d]+/g
-			if( !re.test(data) ){
+			if( data && !re.test(data) ){
 				return true;
 			}
 			return false;
