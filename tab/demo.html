@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		li{
+			list-style: none;
+			float: left;
+		}
+		.title, .content{
+			overflow: hidden;
+		}
+		.title li{
+			border: 1px solid #faa;
+			padding: 4px;
+		}
+		.content li{
+			border: 1px solid #fad;
+			padding: 10px;
+		}
+		.content li[data-index]{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="tab">
+		<div class="title">
+			<ul>
+				<li data-index=0>选项1</li>
+				<li data-index=1>选项2</li>
+				<li data-index=2>选项3</li>
+				<li data-index=3>选项4</li>
+				<li data-index=4>选项5</li>
+			</ul>
+		</div>
+		<div class="content">
+			<ul>
+				<li data-index=0>选项1内容</li>
+				<li data-index=1>选项2内容</li>
+				<li data-index=2>选项3内容</li>
+				<li data-index=3>选项4内容</li>
+				<li data-index=4>选项5内容</li>
+			</ul>
+		</div>
+	</div>
+	<script src="../jquery-2.1.3.js"></script>
+	<script src="./dest/js/jquery.tab.min.js"></script>
+	<!-- // <script src="./src/js/jquery.tab.js"></script> -->
+	<script>
+		$('.tab').tab({
+			"nav": $('.tab').find('.title'),
+			"menu": $('.tab').find('.content')
+		});
+	</script>
+</body>
+</html>
