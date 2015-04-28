@@ -15,11 +15,7 @@
 		});;
 	};
 	$.fn.calender.defaults = {
-		week: ['一', '二', '三', '四', '五', '六', '日'],
-		selectedDay: null,
-		onSelectedDay: $.noop,
-		onToday: $.noop,
-		after: $.noop
+		week: ['一', '二', '三', '四', '五', '六', '日']
 	};
 
 	function Calender(el, opt){
